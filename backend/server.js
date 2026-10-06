@@ -19,10 +19,19 @@ app.use(cors({
 }));
 app.use(express.json());
 
-// API Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/slots', require('./routes/parkingSlotRoutes'));
-app.use('/api/bookings', require('./routes/bookingRoutes'));
+// API Routes (mounted with /api and directly for resilience)
+const authRoutes = require('./routes/authRoutes');
+const parkingSlotRoutes = require('./routes/parkingSlotRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
+
+app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
+app.use('/api/slots', parkingSlotRoutes);
+app.use('/slots', parkingSlotRoutes);
+
+app.use('/api/bookings', bookingRoutes);
+app.use('/bookings', bookingRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
