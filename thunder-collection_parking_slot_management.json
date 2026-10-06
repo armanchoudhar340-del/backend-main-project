@@ -1,0 +1,260 @@
+{
+  "clientName": "Thunder Client",
+  "collectionName": "Parking Slot Management API",
+  "collectionId": "parking-slot-api-collection",
+  "dateExported": "2024-04-15",
+  "version": "1.1",
+  "folders": [
+    {
+      "_id": "folder_auth",
+      "name": "1. Authentication",
+      "containerId": "",
+      "created": "2024-04-15"
+    },
+    {
+      "_id": "folder_slots",
+      "name": "2. Parking Slots",
+      "containerId": "",
+      "created": "2024-04-15"
+    },
+    {
+      "_id": "folder_bookings",
+      "name": "3. Bookings & Conflict Tests",
+      "containerId": "",
+      "created": "2024-04-15"
+    }
+  ],
+  "requests": [
+    {
+      "_id": "req_register_user",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_auth",
+      "name": "Register Regular User",
+      "url": "http://localhost:5001/api/auth/register",
+      "method": "POST",
+      "sortNum": 10000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"user\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_login_user",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_auth",
+      "name": "Login User (Get JWT)",
+      "url": "http://localhost:5001/api/auth/login",
+      "method": "POST",
+      "sortNum": 20000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_login_admin",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_auth",
+      "name": "Login Admin (Get Admin JWT)",
+      "url": "http://localhost:5001/api/auth/login",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_auth_me",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_auth",
+      "name": "Get Current User Profile (Me)",
+      "url": "http://localhost:5001/api/auth/me",
+      "method": "GET",
+      "sortNum": 40000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{TOKEN}}" }
+      ]
+    },
+    {
+      "_id": "req_get_all_slots",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_slots",
+      "name": "Get All Slots (With Occupancy Info)",
+      "url": "http://localhost:5001/api/slots",
+      "method": "GET",
+      "sortNum": 50000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": []
+    },
+    {
+      "_id": "req_get_available_slots",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_slots",
+      "name": "Get Available Slots Now",
+      "url": "http://localhost:5001/api/slots/available",
+      "method": "GET",
+      "sortNum": 60000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": []
+    },
+    {
+      "_id": "req_create_slot_admin",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_slots",
+      "name": "Create Slot (Admin Only)",
+      "url": "http://localhost:5001/api/slots",
+      "method": "POST",
+      "sortNum": 70000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"slotNumber\": \"C-02\",\n  \"location\": \"Basement 2 - Section C\",\n  \"status\": \"available\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_update_slot_admin",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_slots",
+      "name": "Update Slot Status (Admin Only)",
+      "url": "http://localhost:5001/api/slots/{{SLOT_ID}}",
+      "method": "PATCH",
+      "sortNum": 80000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"status\": \"unavailable\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_get_occupancy_admin",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_slots",
+      "name": "Get Occupancy Stats (Admin Only)",
+      "url": "http://localhost:5001/api/slots/occupancy",
+      "method": "GET",
+      "sortNum": 90000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}" }
+      ]
+    },
+    {
+      "_id": "req_create_booking_success",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_bookings",
+      "name": "Create Booking (Success)",
+      "url": "http://localhost:5001/api/bookings",
+      "method": "POST",
+      "sortNum": 100000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{TOKEN}}" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"parkingSlot\": \"{{SLOT_ID}}\",\n  \"startTime\": \"2026-10-10T10:00:00.000Z\",\n  \"endTime\": \"2026-10-10T12:00:00.000Z\",\n  \"vehicleNumber\": \"DL-01-AB-1234\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_create_booking_conflict",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_bookings",
+      "name": "Create Overlapping Booking (Expect 409 Conflict)",
+      "url": "http://localhost:5001/api/bookings",
+      "method": "POST",
+      "sortNum": 110000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" },
+        { "name": "Authorization", "value": "Bearer {{TOKEN}}" }
+      ],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"parkingSlot\": \"{{SLOT_ID}}\",\n  \"startTime\": \"2026-10-10T11:00:00.000Z\",\n  \"endTime\": \"2026-10-10T13:00:00.000Z\",\n  \"vehicleNumber\": \"MH-02-XY-9999\"\n}",
+        "form": []
+      }
+    },
+    {
+      "_id": "req_get_my_bookings",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_bookings",
+      "name": "Get My Bookings",
+      "url": "http://localhost:5001/api/bookings/my",
+      "method": "GET",
+      "sortNum": 120000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{TOKEN}}" }
+      ]
+    },
+    {
+      "_id": "req_get_all_bookings_admin",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_bookings",
+      "name": "Get All Bookings (Admin Only)",
+      "url": "http://localhost:5001/api/bookings",
+      "method": "GET",
+      "sortNum": 130000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ADMIN_TOKEN}}" }
+      ]
+    },
+    {
+      "_id": "req_cancel_booking",
+      "colId": "parking-slot-api-collection",
+      "containerId": "folder_bookings",
+      "name": "Cancel Booking",
+      "url": "http://localhost:5001/api/bookings/{{BOOKING_ID}}/cancel",
+      "method": "PATCH",
+      "sortNum": 140000,
+      "created": "2024-04-15",
+      "modified": "2024-04-15",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{TOKEN}}" }
+      ]
+    }
+  ]
+}
